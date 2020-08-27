@@ -1,0 +1,264 @@
+import java.util.ArrayList;
+
+public class Recursion {
+// QUESTION 1
+ 	//n=5 --> 5 4 3 2 1
+	//pd(5)-->5 pd(n-1)
+    public static void printDecreasing(int n) {
+    	if(n==0) {
+    		return;
+    	}
+    	System.out.println(n);//pre
+    	printDecreasing(n-1);
+    }
+    
+  //Question 2
+    //n=5 -->1 2 3 4 5
+    //pi(5) --> pd(4) 5
+    public static void printIncreasing(int n) {
+    	if(n==0) {
+    		return;
+    	}
+    	printIncreasing(n-1);
+    	System.out.println(n);//post
+    }
+    
+    
+    //QUESTION 3
+    
+    // n=5 --> 5 4 3 2 1 1 2 3 4 5 
+    //pdi(5)-->  5 pdi(4) 5 
+    public static void printDecreasingIncreasing(int n) {
+    	if(n==0) {
+    		return;
+    	}
+    	System.out.println(n);
+    	printDecreasingIncreasing(n-1);
+    	System.out.println(n);
+    }
+    
+    
+    //QUESTION 4
+    
+    //print odd decreasing and even increasing
+    //n==5 --> 5 3 1 2 4
+    public static void pdis(int n) {
+    	if(n==0) {
+    		return;
+    	}
+    	//pre
+    	if(n%2==1)
+    		System.out.println(n);
+    	pdis(n-1);
+    	//post
+    	if(n%2==0)
+    		System.out.println(n);
+    }
+    
+    
+    //QUESTION 5
+    
+    //Factorial
+    // 3!-->6
+    public static int factorial(int n) {
+    	if(n==1) {
+    		return 1;
+    	}
+    	int fact=factorial(n-1);
+    	return n*fact;
+    }
+    
+    
+    //QUESTION 6
+    
+    //power linear
+    //2^3-->8
+    //2^n=2*2^n-1
+    public static int power(int x,int n) {
+    	if(n==0) {
+    		return 1;
+    	}
+    	int p=power(x,n-1);
+    	return x*p;
+    }
+    
+    
+    //QUESTION 7
+    
+    //power logarithm
+    //2^4-->2^2*2^2 --->even
+    //2^5-->2*2^2*2^2 --->odd
+    //x^n=x^n/2*x^n/2
+    public static int powereff(int x,int n) {
+    	if(n==0) {
+    		return 1;
+    	}
+    	int p=powereff(x,n/2);
+    	int p1=p*p;
+    	if(n%2==1) {
+    		p1*=x;
+    	}
+    	return p1;
+    }
+    
+    
+    //QUESTION 8
+    
+    //we have 2 call
+    //3 are pre in post area
+    public static void zigzag(int n) {
+    	if(n==0) {
+    		return;
+    	}
+    	System.out.println("PRE"+n);
+    	zigzag(n-1);
+    	System.out.println("IN"+n);
+    	zigzag(n-1);
+    	System.out.println("POST"+n);
+    }
+    
+    //QUESTION 9
+    
+    
+  //power of hanoi there is a source and des to transfer load using helper
+    //one disk at a time
+    //small disk over big disk
+    public static void towerofhanoi(int n,char s,char d,char h) {
+    	if(n==0) {
+    		return;
+    	}
+    	towerofhanoi(n-1,s,h,d);
+    	System.out.println(n+"["+s+"->"+d+"]");
+    	towerofhanoi(n-1,h,d,s);
+    }
+    
+    
+    //QUESTION 10
+    
+    //display array using recursion
+    //arr-->10,20,30,40,50
+    //disp-->10,20,30,40,50
+    public static void disp_arr(int [] arr,int idx) {
+    	if(idx==arr.length) {
+    		return;
+    	}
+    	System.out.print(arr[idx]+" ");
+    	disp_arr(arr,idx+1);
+    }
+    
+    
+    //QUESTION 11
+    
+    //display array in reverse order
+    //arr-->10,20,30,40,50
+    //disp-->50,40,30,20,10
+    public static void disp_rev(int[]arr,int idx) {
+    	if(idx==arr.length) {
+    		return;
+    	}
+    	disp_rev(arr,idx+1);
+    	System.out.print(arr[idx]+" ");
+    }
+    
+    
+    //QUESTION 12
+    
+    // Max in array using recursion 
+    public static int max(int[] arr,int idx) {
+    	if(idx==arr.length) {
+    		return Integer.MIN_VALUE;
+    	}
+    	int m=max(arr,idx+1);
+    	if(arr[idx]>m) {
+    		return arr[idx];
+    	}else {
+    		return m;
+    	}
+    }
+    
+    
+    
+    //QUESTION 13
+    
+    public static boolean find(int[] arr,int idx,int data) {
+    	if(idx==arr.length) {
+    		return false;
+    	}
+    	if(arr[idx]==data) {
+    		return true;
+    	}
+    	boolean f=find(arr,idx+1,data);
+    	if(f==true) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    
+    
+    //QUESTION 14
+    
+    //Find first index
+    //In pre order we have to return index 
+    public static int firstIndex(int[] arr,int idx,int data) {
+    	if(idx==arr.length) {
+    		return -1;
+    	}
+    	if(arr[idx]==data) {
+    		return idx;
+    	}else {
+    	int fisa=firstIndex(arr,idx+1,data);
+    	return fisa;
+    	}
+    }
+    
+    
+    //QUESTION 15
+    
+    //Find last Index
+    //In post order we have to return index
+    public static int lastIndex(int[] arr,int idx,int data) {
+    	if(idx==arr.length) {
+    		return -1;
+    	}
+    	int li=lastIndex(arr,idx+1,data);
+    	if(li==-1) {
+    	if(arr[idx]==data) {
+    		return idx;
+    	}else {
+    		return -1;
+    	}
+    	}
+    	else {
+    	return li;
+    	}
+    }
+    
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+//		printDecreasing(5);
+//		printIncreasing(5);
+//		printDecreasingIncreasing(5);
+//		pdis(5);
+//		System.out.println(factorial(4));
+//		System.out.println(power(3,3));
+//		System.out.println(powereff(3,3));
+		
+//		zigzag(3);
+//		towerofhanoi(3,'s','d','h');
+		int[] arr= {10,20,40,50,30,30,50};
+//		disp_arr(arr,0);
+//		disp_rev(arr,0);
+//		System.out.println(max(arr,0));
+//		System.out.println(firstIndex(arr,0,30));
+//		System.out.println(find(arr,0,300));
+//		System.out.println(lastIndex(arr,0,30));
+	}
+
+}
+
+
+
+
+
+
