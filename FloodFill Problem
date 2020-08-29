@@ -1,0 +1,36 @@
+public static Recursion{
+//we arr we have to print all path from source row source col  to bottom right corner of array 
+// we havefour possiblity to move top,right ,down,left,
+// paths are
+// ddrrttrrrrddlldddrrr
+// ddrrrrdddrrr
+// ddrdddrrrrrr
+public static void floodfill(int[][] arr,int row,int col,String psf,boolean[][] visited) {
+		//handle base case
+		if(row==arr.length-1&&col==arr[0].length) {
+			System.out.println(psf);
+			return;
+		}
+		if(row<0||col<0||row==arr.length||col==arr[0].length||visited[row][col]==true
+				||arr[row][col]==1) {
+			return;
+		}
+		//4  stupid  calls
+		visited[row][col]=true;
+		floodfill(arr,row-1,col,psf+"t",visited);//top
+		floodfill(arr,row,col+1,psf+"r",visited);//right
+		floodfill(arr,row+1,col,psf+"d",visited);//down
+		floodfill(arr,row,col-1,psf+"l",visited);//left
+		visited[row][col]=false;
+		}
+    public static void main(String[] args) {
+    int[][] arr={{0,1,0,0,0,0,0},
+			     {0,1,0,1,1,1,0},
+				     {0,0,0,0,0,0,0},
+				     {1,0,1,1,0,1,1},
+				     {1,0,1,1,0,1,1},
+				     {1,0,0,0,0,0,0}};
+		boolean[][] visited=new boolean[arr.length][arr[0].length];
+		floodfill(arr,0,0,"",visited);
+    }
+	}
