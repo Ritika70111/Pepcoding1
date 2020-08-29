@@ -1,0 +1,38 @@
+public class Recursion {
+	/*
+	 * A Maze is given as N*N binary matrix of blocks where source block is
+	 *  the upper left most block i.e., maze[0][0] and destination block is lower 
+	 *  rightmost block i.e., maze[N-1][N-1]. 
+	 *  A rat starts from source and has to reach the destination.
+	 *   The rat can move only in two directions: forward and down.
+	 *   {1, 0, 0, 0}            {1, 0, 0, 0}    
+         {1, 1, 0, 1}            {1, 1, 0, 0}   
+         {0, 1, 0, 0}   ---->    {0, 1, 0, 0}   
+         {1, 1, 1, 1}            {0, 1, 1, 1}   
+	 */
+   
+   
+	public static void ratInMaze(int[][] arr,int row,int col,int[][] visited) {
+		if(row==arr.length-1&&col==arr[0].length) {
+			display(visited);
+			return;
+		}
+		if(row<0||col<0||row==arr.length||col==arr.length||visited[row][col]==1||
+				arr[row][col]==0) {
+			return;
+		}
+		
+		visited[row][col]=1;
+		ratInMaze(arr,row,col+1,visited);//forward call
+		ratInMaze(arr,row+1,col,visited);//down call
+		visited[row][col]=0;
+	}
+  public static void main(String[] args) {
+  int[][] arr= {{1, 0, 0, 0},
+		             {1, 1, 0, 1},
+		              {0, 1, 0, 0},
+		              {1, 1, 1, 1}};
+	    int[][] visited=new int[arr.length][arr[0].length];
+	    ratInMaze(arr,0,0,visited);
+  }
+  }
