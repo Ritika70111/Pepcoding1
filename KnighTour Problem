@@ -1,0 +1,47 @@
+//Knight Tour explanation
+	/*
+	 * we have n*n chess board , row & col given consider as starting point
+	 * Required to generate all possible moves of knight such that knight
+	 * visit all the cells exactly once .
+	 * Knight have to visit all the cells without visiting each cell twice.
+	 * knight have 8 possible option
+	 * if knight have i,j ,the 8 options are:
+	 *  i-2,j+1
+	 *  i-1,j+2
+	 *  i+1,j+2
+	 *  i+2,j+1
+	 *  i+2,j-1
+	 *  i+1,j-2
+	 *  i-1,j-2
+	 *  i-2,j-1
+	 */
+   
+   
+  public class Recursion {
+	public static void knightTour(int[][] chess,int row,int col,int move) {
+		// 8 calls
+		if(row<0||col<0||row>=chess.length||col>=chess[0].length||chess[row][col]>0) {
+			return;
+		}else if(move==chess.length*chess[0].length) {
+			chess[row][col]=move;
+			displayTour(chess);
+			chess[row][col]=0;
+			return;
+		}
+		chess[row][col]=move;
+		knightTour(chess,row-2,col+1,move+1);
+		knightTour(chess,row-1,col+2,move+1);
+		knightTour(chess,row+1,col+2,move+1);
+		knightTour(chess,row+2,col+1,move+1);
+		knightTour(chess,row+2,col-1,move+1);
+		knightTour(chess,row+1,col-2,move+1);
+		knightTour(chess,row-1,col-2,move+1);
+		knightTour(chess,row-2,col-1,move+1);
+		chess[row][col]=0;
+	}
+  public static void main(String[] args) {
+   int n=4;
+		int[][] chess=new int[n][n];
+   	knightTour(chess,2,2,1);
+  }
+  }
