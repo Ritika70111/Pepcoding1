@@ -1,0 +1,41 @@
+/*
+	 * The problem is to count all the possible paths from top left to bottom right
+	 *  of a MxN matrix with the constraints that from each cell you can either move
+	 *   to right or down.
+	 *   Input:
+      The first line of input contains an integer T, denoting the number of test cases. 
+      The first line of each test case is M and N, M is number of rows and N is 
+      number of columns.
+      Input
+			2
+			3 3
+			2 8
+			
+			Output
+			6
+			8
+	 */
+   
+   
+   
+   public class Recursion{
+   
+	static int c=0;
+	public static void NumOfPaths(int sr,int sc,int dr,int dc) {
+		if(sr==dr&&sc==dc) {
+			c++;
+		}
+		if(sr>dr||sc>dc) {
+			return;
+		}
+		//right call
+		NumOfPaths(sr,sc+1,dr,dc);
+		//down call
+		NumOfPaths(sr+1,sc,dr,dc);
+		
+	}
+   public static void main(String[] args) {
+   NumOfPaths(1,1,2,8);
+   	System.out.println(c);
+   }
+  }
