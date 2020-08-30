@@ -1,0 +1,20 @@
+public class Recursion{
+      /* Given an array we have to give combination of value which is equal to target
+         *  int[] arr={10,20,30,40,50}; target=60
+         *  10 20 30 
+         *  10 50
+         *  20 40
+         */
+        public static void targetsum(int[] arr,int idx,int tar,String sos,int s) {
+          if(idx==arr.length) {
+            if(s==tar)
+            System.out.println(sos);
+            return;
+          }
+          targetsum(arr,idx+1,tar,sos+arr[idx]+",",s+arr[idx]);
+          targetsum(arr,idx+1,tar,sos,s);
+        }
+   public static void main(String[] args) {
+   
+   }
+  }
