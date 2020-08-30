@@ -11,7 +11,7 @@ public class Recursion {
          {1, 1, 1, 1}            {0, 1, 1, 1}   
 	 */
    
-   
+      // One Way
 	public static void ratInMaze(int[][] arr,int row,int col,int[][] visited) {
 		if(row==arr.length-1&&col==arr[0].length) {
 			display(visited);
@@ -27,6 +27,48 @@ public class Recursion {
 		ratInMaze(arr,row+1,col,visited);//down call
 		visited[row][col]=0;
 	}
+	
+	
+	
+	//Alternative Type of rat in a maze
+	
+	
+	
+	/*
+	 * Consider a rat placed at (0, 0) in a square matrix of order N*N. It has to reach
+	 *  the destination at (N-1, N-1). 
+	 *  Find all possible paths that the rat can take to reach from source to destination.
+	 *   The directions in which the rat can move are 'U'(up), 'D'(down), 'L' (left),
+	 *    'R' (right). Value 0 at a cell in the matrix represents that it is blocked 
+	 *    and cannot be crossed while value 1
+	 *  at a cell in the matrix represents that it can be traveled through.
+
+		Example 1:
+		
+		Input: N = 4, m[][] = {{1, 0, 0, 0},
+		                       {1, 1, 0, 1}, 
+		                       {1, 1, 0, 0},
+		                       {0, 1, 1, 1}}
+		Output: DDRDRR DRDDRR
+	 */
+	public static void ratInMaze2(int[][] arr,int row,int col,int[][] visited,String psf) {
+		if(row==arr.length-1&&col==arr[0].length) {
+			System.out.println(psf);
+			return;
+		}
+		if(row<0||col<0||row==arr.length||col==arr.length||visited[row][col]==1||
+				arr[row][col]==0) {
+			return;
+		}
+		
+		visited[row][col]=1;
+		ratInMaze2(arr,row-1,col,visited,psf+"U");//up
+		ratInMaze2(arr,row,col+1,visited,psf+"R");//right
+		ratInMaze2(arr,row+1,col,visited,psf+"D");//down
+		ratInMaze2(arr,row,col-1,visited,psf+"L");//left
+		visited[row][col]=0;
+	}
+	
   public static void main(String[] args) {
   int[][] arr= {{1, 0, 0, 0},
 		             {1, 1, 0, 1},
