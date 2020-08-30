@@ -1,0 +1,45 @@
+//print Encoding 
+	//123-->abc,aw,lc
+	//
+  
+  public static Recursion{
+	public static void printEncoding(String ques,String ans) {
+		if(ques.length()==0) {
+			System.out.println(ans);
+			return;
+		}
+		else if(ques.length()==1) {
+			//1
+			char ch=ques.charAt(0);
+		    if(ch=='0') {
+		    	return;
+		    }else {
+		    	int chv=ch-'0';//49-48
+		    	char code=(char)('a'+chv-1);
+		    	ans=ans+code;
+		    	System.out.println(ans);
+		    }
+		}else {
+			char ch=ques.charAt(0);
+			String roq=ques.substring(1);
+			if(ch=='0') {
+				return ;
+			}else {
+		    	int chv=ch-'0';//49-48
+		    	char code=(char)('a'+chv-1);
+		    	printEncoding(roq,ans+code);
+		    }
+			//two
+			String ch12=ques.substring(0,2);
+			String roq1=ques.substring(2);
+			int ch12v=Integer.parseInt(ch12);
+			if(ch12v<=26) {
+				char c=(char)('a'+ ch12v-1);
+				printEncoding(roq1,ans+c);
+			}
+		}
+	}
+  public static void main(String[] args) {
+     printEncoding("12103","");
+  }
+  }
