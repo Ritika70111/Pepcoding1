@@ -1,0 +1,106 @@
+import java.util.ArrayList
+public class WritePriorityQueue {
+	//priority uses arraylist to implement there function
+	//add remove peek size
+  // peek---> 0(1) time complexity
+ // add and remove-->0(logn) time complexity 
+ //priority queue class uses heap (tree)
+ //make arraylist and arraylist consider as tree datastructure 
+ //priority Queue maintain complete binary tree property (useful to make arraylist as tree)
+ // and heap order property (useful to make parent have more priority than child)
+ // if parent i
+ //left child-->2*i+1 and right child-->2*i+2
+  //if we make small priority queue --> peek --> small value (child<parent)-->swap
+  //add--> add at last of arraylist and then call upheapify function (compare child and parent ) 
+  //if child is smaller than parent then we need to swap both and again call upheapify(parent) 
+  //remove --> swap(first element of arraylist,last element of arraylist)-->this gives smallest value which is at root but now at last index
+  //then we easily delete last element because it doesnot effect arraylist
+  //and now call downheapify(0)
+  //compare with both childs and mini==smallest among li,ri,pi
+  //swap--? again call downheapify(mini)
+  //peek--> give the root value because in here at root have smallest value
+  
+    public  static class PriorityQueue{
+    	ArrayList<Integer> data;
+    	public PriorityQueue() {
+    		data=new ArrayList<>();
+    	}
+    	private void swap(int i,int j) {
+    		int ith=data.get(i);
+    		int jth=data.get(j);
+    		data.set(i, jth);
+    		data.set(j, ith);
+    	}
+    	private void upheapify(int i) {
+    		if(i==0) {
+    			return;
+    		}
+    		int pi=(i-1)/2;
+    		if(data.get(i)<data.get(pi)) {
+    			//swap
+    			swap(i,pi);
+    			upheapify(pi);
+    		}
+    	}
+    	public  void add(int val) {
+    		
+    		data.add(val);//0(1)
+    		upheapify(data.size()-1);//0(logn)
+    	}
+ 
+    	
+    	private void downheapify(int pi) {
+    		int mini=pi;
+    		int li=2*pi+1;
+    		if(li<data.size()&&data.get(li)<data.get(mini)) {
+    			mini=li;
+    		}
+    		int ri=2*pi+2;
+    		if(ri<data.size()&&data.get(ri)<data.get(mini)) {
+    			mini=ri;
+    		}
+    		//li,ri,pi--min
+    		if(mini!=pi) {
+    			swap(pi,mini);
+    			downheapify(mini);
+    		}
+    	}
+        public  int remove() {
+        	if(this.size()==0) {
+    			System.out.println("underflow");
+    			return -1;
+    		}
+        	swap(0,data.size()-1);
+        	int val=data.remove(data.size()-1);
+        	downheapify(0);
+        	return val;
+    	}
+        public int peek() {
+    		if(this.size()==0) {
+    			System.out.println("underflow");
+    			return -1;
+    		}
+    		return data.get(0);
+    	}
+       public  int size() {
+    		return data.size();
+    	}
+    }
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		PriorityQueue pq=new PriorityQueue();
+		pq.add(10);
+		pq.add(30);
+		pq.add(4);
+		pq.add(16);
+
+		System.out.println(pq.size());//4
+		System.out.println(pq.remove());//4
+		System.out.println(pq.peek());//10
+		pq.add(35);
+		pq.add(1);
+		System.out.println(pq.peek());
+
+	}
+
+}
