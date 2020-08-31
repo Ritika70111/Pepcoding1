@@ -1,0 +1,38 @@
+import java.util.ArrayList;
+
+public class Blank{
+      //answerfor  given graph is 3
+          public static void drawTreeForComp(int[][] arr,int i,int j,
+        		  boolean[][] visited) {
+        	  if(i<0||j<0||i==arr.length||j==arr[0].length||arr[i][j]==1||visited[i][j]==true) {
+        		  return;
+        	  }
+        	visited[i][j]=true;
+        	//4 call nesw
+      		drawTreeForComp(arr,i-1,j,visited);//north
+      		drawTreeForComp(arr,i,j+1,visited);//east
+      		drawTreeForComp(arr,i+1,j,visited);//south
+      		drawTreeForComp(arr,i,j-1,visited);//west
+          }
+        public static void main(String[] args) {
+          int[][] arr={{0,0,1,1,1,1,1,1},
+		   		       {0,0,1,1,1,1,1,1},
+		   		       {1,1,1,1,1,1,1,0},
+		   		       {1,1,0,0,0,1,1,0},
+		   		       {1,1,1,1,0,1,1,0},
+		   		       {1,1,1,1,0,1,1,0}
+		   		       };	
+          int count=0;
+          boolean[][] visited=new boolean[arr.length][arr[0].length];
+          for(int i=0;i<arr.length;i++) {
+        	  for(int j=0;j<arr[0].length;j++) {
+        		  if(arr[i][j]==0&&visited[i][j]==false) {
+        			  drawTreeForComp(arr,i,j,visited);
+        			  count++;
+        		  }
+        	  }
+        	  
+          }
+          System.out.println(count);
+        }
+}
