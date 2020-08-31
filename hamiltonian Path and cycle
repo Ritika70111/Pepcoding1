@@ -1,0 +1,89 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.ArrayList;
+
+public class Blank{
+          40         2
+        0--------3----------4
+        |        |          |  \
+      10|        |10       3|    \3
+        |        |          |      \ 
+        1--------2          5-------6
+            10                 3
+            
+            0123456.
+            0123465.
+            0125643*
+            0346521*
+            
+            
+	 public static class Edge{
+         int v1;
+         int v2;
+         int wt;
+         Edge(int v1,int v2,int wt){
+           this.v1=v1;
+           this.v2=v2;
+           this.wt=wt;
+         }
+       }
+           //DFS Depth first search
+         public static void hamiltonian(ArrayList<Edge>[] graph,int sr,HashSet<Integer> visited,int osrc,String psf) {
+        	 //check whether each path is path or cycle
+           if(visited.size()==graph.length-1) {
+             System.out.print(psf);
+            boolean closeEdge=false;
+             for(Edge e:graph[src]) {
+            	 if(e.v2==osrc) {
+            		 closeEdge=true;
+            	 }
+             }
+             if(closeEdge==true) {
+            	 System.out.print("*");
+             }else {
+            	 System.out.print(".");
+             }
+             System.out.println();
+             return;
+           }
+           
+           visited.add(src);
+           for(Edge e:graph[src]) {
+             if(visited.contains(e.v2)==false) {
+            	 hamiltonian(graph,e.v2,visited,osrc,psf+e.v2);
+             }
+           }
+           visited.remove(src);
+         }
+
+   public static void main(String[] args) throws Exception {
+   //noramally take input
+   
+       int vtces=7;//0,1,2,3,4,5,6
+       //array of arraylist
+       ArrayList<Edge> [] graph=new ArrayList[vtces];
+       for(int i=0;i<vtces;i++) {
+         graph[i]=new ArrayList<>();
+       }
+           graph[0].add(new Edge(0,1,10));
+           graph[0].add(new Edge(0,3,10));
+           graph[1].add(new Edge(1,0,10));
+           graph[1].add(new Edge(1,2,10));
+           graph[2].add(new Edge(2,1,10));
+           graph[2].add(new Edge(2,3,10));
+           graph[3].add(new Edge(3,0,40));
+           graph[3].add(new Edge(3,2,10));
+           graph[3].add(new Edge(3,4,2));
+           graph[4].add(new Edge(4,3,2));
+           graph[4].add(new Edge(4,5,3));
+           graph[4].add(new Edge(4,6,3));
+           graph[5].add(new Edge(5,4,3));
+           graph[5].add(new Edge(5,6,3));
+           graph[6].add(new Edge(6,4,3));
+           graph[6].add(new Edge(6,5,3));
+           graph[2].add(new Edge(2,5,10));
+           graph[5].add(new Edge(5,2,10));
+           HashSet<Integer> visited=new HashSet<>(); 
+           hamiltonian(graph,0,visited,0,0+"");
+   }
+}
