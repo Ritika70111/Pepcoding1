@@ -15,6 +15,7 @@ public class Recursion{
           targetsum(arr,idx+1,tar,sos,s);
         }
    public static void main(String[] args) {
-   
+      int[] arr={10,20,30,40,50};
+      targetsum(arr,0,60,"",0);
    }
   }
