@@ -1,0 +1,153 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+public class WriteHashMap {
+    public static class HashMap<K,V>{
+    	public class HMNode{
+    		K key;
+    		V value;
+    		//constructor fornode
+    		HMNode(K key,V value){
+    			this.key=key;
+    			this.value=value;
+    		}
+    	}
+    	private int size;//n
+    	private LinkedList<HMNode>[] buckets;
+    	//HashMap constructor
+    	public HashMap() {
+    		initbuckets(4);
+    		size=0;
+    	}
+    	private void initbuckets(int n) {
+    		buckets=new LinkedList[n];
+    		for(int i=0;i<buckets.length;i++) {
+    			buckets[i]=new LinkedList();
+    		}
+    	}
+    	private int hashfn(K key) {
+    		//we give key value to hashfunction which provide hashcode 0(1)
+    		//Returns a hash code value for the object.
+    		//This method issupported for the benefit of hash tables such as those
+    		//provided by HashMap. 
+    		int hc=key.hashCode();
+    		return Math.abs(hc)%buckets.length;
+    	}
+    	private int getIndexWithinBucket(K key,int bi) {
+    		//loop in linkedlist
+    		int di=0;
+    		for(HMNode node:buckets[bi]) {
+    			if(node.key==key) {
+    				return di;
+    			}
+    			di++;
+    		}
+    		return -1;
+    	}
+    	public  void put(K key ,V value) {
+    		int bi=hashfn(key);//o(1)
+    		//gives the bucket value which bucket has that key value
+    		int di=getIndexWithinBucket( key,bi);//0(lambda)
+    //in particular bucket where void is present in linkedlist it gives index if present
+    		//if not present gives -1
+    		if(di!=-1) {
+    			//update
+    			HMNode node=buckets[bi].get(di);
+    			node.value=value;
+    		}else {
+    			//di==-1
+    			//insert node create 
+    			HMNode node=new HMNode(key,value);
+    			buckets[bi].add(node);//add last to linked list
+    			size++;
+    		}
+    		double lambda=(size*1.0)/buckets.length;
+    		if(lambda>2) {
+    			rehash();//it maintain that each bucket have not more elements 
+    			//than thersold value 
+    		}
+    	}
+    	public void rehash() {
+    		LinkedList<HMNode>[] oba=buckets;
+    		initbuckets(oba.length*2);
+    		size=0;
+    		for(int i=0;i<oba.length;i++) {
+    			for(HMNode node:oba[i]) {
+    				put(node.key,node.value);
+    			}
+    		}
+    		
+    	}
+    	///for particular key it give vthe value
+    	// map.get(1)-->false
+    	public V get(K key) {
+    		int bi=hashfn(key);//o(1)
+    		//gives the bucket value which bucket has that key value
+    		int di=getIndexWithinBucket( key,bi);
+    
+    		if(di!=-1) {
+    			HMNode node=buckets[bi].get(di);
+    			return node.value;
+    		}
+    		else {
+    			return null;
+    		}
+    	
+    	}
+    	//if key contain in HashMap return true else false
+    	public boolean containsKey(K key) {
+    		int bi=hashfn(key);//o(1)
+    		//gives the bucket value which bucket has that key value
+    		int di=getIndexWithinBucket( key,bi);
+    
+    		if(di!=-1) {
+    			return true;
+    		}
+    		else {
+    			return false;
+    		}
+    	
+    	}
+    	public V remove(K key) {
+    		int bi=hashfn(key);//o(1)
+    		//gives the bucket value which bucket has that key value
+    		int di=getIndexWithinBucket( key,bi);
+    
+    		if(di!=-1) {
+    			HMNode node=buckets[bi].get(di);
+    			size--;
+    			return node.value;
+    		}
+    		else {
+    			return null;
+    		}
+    	
+    	}
+    	public ArrayList<K> keySet(){
+    		ArrayList<K> keys=new ArrayList<>();
+    		for(int bi=0;bi<buckets.length;bi++) {
+    			for(HMNode node:buckets[bi] ) {
+    				keys.add(node.key);
+    			}
+    		}
+    		return keys;
+    	}
+    	public void display() {
+    		for(int bi=0;bi<buckets.length;bi++) {
+    			for(HMNode node:buckets[bi]) {
+    				System.out.println(node.key+"@"+node.value);
+    			}
+    		}
+    	}
+    }
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+     HashMap<Integer,Boolean> map=new HashMap();
+     map.put(1,false);
+     map.put(2,true);
+     map.display();
+     
+     
+	}
+
+}
