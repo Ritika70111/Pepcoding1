@@ -1,0 +1,225 @@
+public class sorting {
+	/* Bubble sort is a simple algorithm which is used to sort n elements
+	 * first element is compare with second element ,if first element is greater than 
+	 * second then make a swap and then compare second and third and so on.
+	 * It is known as bubble sort because every complete iteration ,the largest element
+	 *  is at last index/highest index, just like water bubble rise up on the surface.
+	 *  
+	 *  worst and average time complexity -->0(n^2)
+	 *  best case time complexity ---->0(n) if list is already sorted
+	 *  space complexity -->0(1) no additional space is used
+	 *  more than 0(n) swaps
+	 * 
+	 */
+    public static void bubbleSort(int[] arr) {
+    	for(int i=1;i<arr.length;i++) {
+    		for(int j=0;j<arr.length-i;j++) {
+    			if(arr[j] >arr[j+1]) {
+    				//swap
+    				int temp=arr[j];
+    				arr[j]=arr[j+1];
+    				arr[j+1]=temp;
+    			}
+    		}
+    	}
+    }
+    public static void swap(int[] arr,int i,int j) {
+    	int temp=arr[i];
+		arr[i]=arr[j];
+		arr[j]=temp;
+    }
+    /* optimized bubble sort we have to maintain a flag , if there is no swapping inside 
+     * inner for loop it means array is sorted then we jump out of loop
+     * break
+     * 
+     */
+    public static void bubbleSortoptimized(int[] arr) {
+    	int flag=0;
+    	for(int i=1;i<arr.length;i++) {
+    		for(int j=0;j<arr.length-i;j++) {
+    			if(arr[j] >arr[j+1]) {
+    				//swap
+    				int temp=arr[j];
+    				arr[j]=arr[j+1];
+    				arr[j+1]=temp;
+    				flag=1;
+    			}
+    		}
+    		if(flag==0) {
+    			break;
+    		}
+    	}
+    }
+    /* it find smallest element from unsorted part and put it at beginning and 
+     * increase beginning index
+     * this algorithm maintain two subarray->sorted and unsorted
+     * end of each iteration , smallest element is at beginning
+     * 
+     * Time complexity-->0(n2)->all three case because there are nested loop
+     * space complexity -->0(1)
+     * the good thing about selection sort is never make more than o(n) swaps
+     * at each iteration only one swap
+     * 
+     */
+    public static void selectionSort(int[] arr) {
+    	for(int itr=0;itr<arr.length-1;itr++) {
+    		int min=itr;
+    		for(int j=itr+1;j<arr.length;j++) {
+    			if(arr[j]<arr[min]) {
+    				min=j;
+    			}
+    		}
+    		//min mil gya
+    		swap(arr,itr,min);
+    	}
+    }
+    /*
+     * The array is virtually divided  into 2 part i.e sorted and unsorted array.
+     * values from unsorted array is picked and place at the correct position in 
+     * sorted part.
+     * substeps-->reverse bubbling
+     * it start from index 1 not 0
+     * iterate from arr[1] to arr[n]
+     * Now compare current element  from its predessor , if current element is smaller 
+     * then its predessor make swap else break;
+     * it is efficient for smaller data sets 
+     * it is better than selection and bubble sort
+     * 
+     * Time complexity -->0(n2) best--> 0(n)
+     * space complexity--> 0(1)
+     * 
+     */
+    public static void insertionSort(int[] arr) {
+    	for(int i=1;i<arr.length;i++) {
+    		for(int j=i-1;j>=0;j--) {
+    			if(arr[j] >arr[j+1]) {
+    				swap(arr,j,j+1);
+    			}else {
+    				break;
+    			}
+    		}
+    	}
+    }
+    /*
+     * we have two sorted array , we have to merge the two array in ascending order
+     * we use extra space to store data
+     * time complexity-->0(n1+n2)-->0(n)
+     * space complexity-->0(n1+n2)-->0(n)
+     */
+    public static int[] mergeTwoSortedArray(int[] a,int[] b) {
+    	int[] c=new int[a.length+b.length];
+    	int i=0,j=0,k=0;
+    	while(i<a.length&&j<b.length) {
+    		if(a[i]<b[j]) {
+    			c[k]=a[i];
+    			i++;
+    			k++;
+    		}else {
+    			c[k]=b[j];
+    			j++;
+    			k++;
+    		}
+    	}
+    	while(i<a.length) {
+    		c[k]=a[i];
+			i++;
+			k++;
+    	}
+    	while(j<b.length) {
+    		c[k]=b[j];
+			j++;
+			k++;
+    	}
+    	return c;
+    }
+    /*  merge sort follows the divide and conquer algorithm
+     *  it usedrecursion, hence less time consuming
+     *  It divides the input array into 2 halves using middle, call itself for two halves 
+     *  in recursion we have faith that 2 haves gives solution , then merge 
+     *  that two sorted halves 
+     *   recursive function T(n)=2T(n/2)+0(n)
+     *   time complexity --> 0(n*logn) all three cases
+     *   space  complexity -->0(n)
+     *   merge sort is quiet fast 
+     *   it is also a stable sort
+     */
+    public static int[] mergeSort(int[] arr,int lo,int hi) {
+    	if(lo==hi) {
+    		int[] b=new int[1];
+    		b[0]=arr[lo];
+    		return b;
+    	}
+    	int mid=(lo+hi)/2;
+    	int[] fsh=mergeSort(arr,lo,mid);
+    	int[] lsh=mergeSort(arr,mid+1,hi);
+    	int[] mres=mergeTwoSortedArray(fsh,lsh);
+    	return mres;
+    }
+    public static void print(int[] arr) {
+    	for(int i=0;i<arr.length;i++) {
+    		System.out.print(arr[i]+" ");
+    	}
+    }
+    /* quicksort is based on the divide and conquer method.it pick an element as pivot
+     * partition an array around pivot element
+     * 
+     *  This algorithm has a three parts
+     *  element less than pivot 
+     *  pivot element
+     *  element greater then pivot
+     *  
+     *  1. select a pivot element
+     *  2.call partition function it is not simple partition function but if x as pivot
+     *   element then all small element before x and greater element after x.
+     *  3.pivot element will at correct position.
+     *  4.The element in left and right may not be sorted
+     *  5. then we call quicksort of left and right subarray
+     *   
+     *   Best case time complexity-->0(nlogn) partition-n or n/2 elements
+     *    it occur when pivot element is always middle so achieving best case in 
+     *    quick sort is not possible.
+     *    
+     *    worst case->if list is already sorted
+     *    pivot is at either last or first evry time partition give last  or  first
+     *    T(n)=T(n-1)+0(n)--->0(n2)
+     *    space complexity -->atack with recursion call level
+     *    
+     */
+    public static void quickSort(int[] arr,int lo,int hi) {
+    	if(lo>hi) {
+    		return;
+    	}
+    	int pivot=arr[hi];
+    	int pi=partition(arr,pivot,lo,hi);
+    	quickSort(arr,lo,pi-1);
+    	quickSort(arr,pi+1,hi);
+    	}
+    public static int  partition(int[] arr,int pivot,int lo,int hi) {
+    	int i=lo;
+    	int j=lo;
+    	while(i<=hi) {
+    		if(arr[i]<=pivot) {
+    			swap(arr,i,j);
+    			i++;
+    			j++;
+    		}else {
+    			i++;
+    		}
+    	}
+     return j-1;//pivot correct position
+    }
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+      int[] arr= {10, 300,410,50,180};
+      int[] arr1= {14,  43,48,90};
+//      bubbleSort(arr);
+//      selectionSort(arr);
+//      insertionSort(arr);
+//      int[] c=mergeTwoSortedArray(arr,arr1);
+//      int [] c=mergeSort(arr,0,arr.length-1);
+      quickSort(arr,0,arr.length-1);
+      print(arr);
+      
+	}
+
+}
